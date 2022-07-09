@@ -6,9 +6,9 @@ import RPi.GPIO
 import time
 
 # 17
-# 18
 # 27
 # 22
+# 10
 UP = 17
 DOWN = 18
 LEFT = 27
@@ -52,7 +52,7 @@ async def server(websocket, path):
         connected.remove(websocket)
 
 
-start_server = websockets.serve(server, "localhost", 5000)
+start_server = websockets.serve(server, "localhost", 8080)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
