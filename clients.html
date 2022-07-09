@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Thing2</title>
+</head>
+<body>
+    <button onclick="up()"> up</button>
+    <button onclick="down()"> down</button>
+    <button onclick="right()"> right</button>
+    <button onclick="left()"> left</button>
+
+</body>
+<script>
+    // Create WebSocket connection.
+    const socket = new WebSocket('ws://localhost:5000');
+
+    // Connection opened
+    socket.addEventListener('open', function (event) {
+        console.log('Connected to the WS Server!')
+    });
+
+    // Connection closed
+    socket.addEventListener('close', function (event) {
+        console.log('Disconnected from the WS Server!')
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', function (event) {
+        console.log('Message from server ', event.data);
+    });
+    // Send a msg to the websocket
+    const up = () => {
+        socket.send('up');
+    }
+        const down = () => {
+        socket.send('down');
+    }
+            const left = () => {
+        socket.send('left');
+    }
+            const right = () => {
+        socket.send('right');
+    }
+
+</script>
+</html>
