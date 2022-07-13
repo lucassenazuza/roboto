@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socket Thing2</title>
+    <style>
+        body {background-color: black;}
+        button {padding: 12px 30px;}
+    </style>
 </head>
-<body>
-    <button onclick="up()"> up</button>
-    <button onclick="down()"> down</button>
-    <button onclick="right()"> right</button>
-    <button onclick="left()"> left</button>
 
+<body>
+<p align="center"><iframe src="http://192.168.100.17:5000/video_feed" width="800" height="600"></iframe><br><button onclick="up()"> up</button>
+    <button onclick="down()"> down</button>
+    <button onclick="right()"> left</button>
+    <button onclick="left()"> right</button></p>
 </body>
 <script>
     // Create WebSocket connection.
-    const socket = new WebSocket('ws://localhost:8080');
+
+    const socket = new WebSocket('ws://192.168.100.17:5000/sock');
 
     // Connection opened
     socket.addEventListener('open', function (event) {
@@ -43,6 +48,7 @@
             const right = () => {
         socket.send('right');
     }
+
 
 </script>
 </html>
