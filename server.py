@@ -1,6 +1,6 @@
 import cv2
 from flask import Flask, Response
-from flask_socketio import SocketIO
+from flask_sock import Sock
 
 import RPi.GPIO as GPIO
 # ! /usr/bin/python
@@ -24,7 +24,7 @@ GPIO.setup(LEFT_REVERSE, GPIO.OUT)
 
 connected = set()
 app = Flask('__name__')
-sock = SocketIO(app)
+sock = Sock(app)
 video = cv2.VideoCapture(0)
 
 
@@ -43,7 +43,7 @@ def video_stream():
 def video_feed():
     return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@sock.on(namespace="/sock")
+@sock.route("/sock")
 def server(ws):
     while True:
         try:
