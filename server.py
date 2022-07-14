@@ -3,6 +3,7 @@ from flask import Flask, Response
 from flask_sock import Sock
 
 import RPi.GPIO as GPIO
+import time
 # ! /usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -12,8 +13,8 @@ import RPi.GPIO as GPIO
 # 10
 RIGHT_STRAIGHT = 17
 RIGHT_REVERSE = 27
-LEFT_REVERSE = 22
-LEFT_STRAIGHT = 10
+LEFT_REVERSE = 10
+LEFT_STRAIGHT = 22
 
 
 GPIO.setmode(GPIO.BCM)
