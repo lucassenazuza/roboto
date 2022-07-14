@@ -58,24 +58,24 @@ def server(ws):
                 time.sleep(0.2)
                 GPIO.output(RIGHT_STRAIGHT, GPIO.LOW)
                 GPIO.output(LEFT_STRAIGHT, GPIO.LOW)
-                await ws.send(f' recebido: {message}')
+                ws.send(f' recebido: {message}')
             elif (message == "down"):
                 GPIO.output(RIGHT_REVERSE, GPIO.HIGH)
                 GPIO.output(LEFT_REVERSE, GPIO.HIGH)
                 time.sleep(0.2)
                 GPIO.output(RIGHT_REVERSE, GPIO.LOW)
                 GPIO.output(LEFT_REVERSE, GPIO.LOW)
-                await ws.send(f' recebido: {message}')
+                ws.send(f' recebido: {message}')
             elif (message == "left"):
                 GPIO.output(LEFT_STRAIGHT, GPIO.HIGH)
                 time.sleep(0.2)
                 GPIO.output(LEFT_STRAIGHT, GPIO.LOW)
-                await ws.send(f' recebido: {message}')
+                ws.send(f' recebido: {message}')
             elif (message == "right"):
                 GPIO.output(RIGHT_STRAIGHT, GPIO.HIGH)
                 time.sleep(0.2)
                 GPIO.output(RIGHT_STRAIGHT, GPIO.LOW)
-                await ws.send(f' recebido: {message}')
+                ws.send(f' recebido: {message}')
         finally:
             # Unregister.
             connected.remove(ws)
