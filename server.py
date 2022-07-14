@@ -74,6 +74,11 @@ def server(ws):
                 GPIO.output(RIGHT_STRAIGHT, GPIO.LOW)
                 ws.send(f' recebido: {message}')
         finally:
+            print('erro na execução')
+            GPIO.output(RIGHT_STRAIGHT, GPIO.LOW)
+            GPIO.output(LEFT_STRAIGHT, GPIO.LOW)
+            GPIO.output(RIGHT_STRAIGHT, GPIO.LOW)
+            GPIO.output(LEFT_STRAIGHT, GPIO.LOW)
             # Unregister.
             connected.remove(ws)
             GPIO.cleanup()
