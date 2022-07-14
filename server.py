@@ -47,7 +47,7 @@ def video_stream():
 def video_feed():
     return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.sock("/sock")
+@sock.route("/sock")
 async def server(websocket, path):
     # Register.
     connected.add(websocket)
