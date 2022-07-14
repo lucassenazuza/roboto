@@ -48,39 +48,38 @@ def video_feed():
     return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @sock.route("/sock")
-async def server(websocket, path):
-    # Register.
-    connected.add(websocket)
-    try:
-        async for message in websocket:
+def server(ws):
+    while True:
+        try:
+            message = ws.receive()
             if (message == "up"):
                 GPIO.output(RIGHT_STRAIGHT, GPIO.HIGH)
                 GPIO.output(LEFT_STRAIGHT, GPIO.HIGH)
                 time.sleep(0.2)
                 GPIO.output(RIGHT_STRAIGHT, GPIO.LOW)
                 GPIO.output(LEFT_STRAIGHT, GPIO.LOW)
-                await websocket.send(f' recebido: {message}')
+                await ws.send(f' recebido: {message}')
             elif (message == "down"):
                 GPIO.output(RIGHT_REVERSE, GPIO.HIGH)
                 GPIO.output(LEFT_REVERSE, GPIO.HIGH)
                 time.sleep(0.2)
                 GPIO.output(RIGHT_REVERSE, GPIO.LOW)
                 GPIO.output(LEFT_REVERSE, GPIO.LOW)
-                await websocket.send(f' recebido: {message}')
+                await ws.send(f' recebido: {message}')
             elif (message == "left"):
                 GPIO.output(LEFT_STRAIGHT, GPIO.HIGH)
                 time.sleep(0.2)
                 GPIO.output(LEFT_STRAIGHT, GPIO.LOW)
-                await websocket.send(f' recebido: {message}')
+                await ws.send(f' recebido: {message}')
             elif (message == "right"):
                 GPIO.output(RIGHT_STRAIGHT, GPIO.HIGH)
                 time.sleep(0.2)
                 GPIO.output(RIGHT_STRAIGHT, GPIO.LOW)
-                await websocket.send(f' recebido: {message}')
-    finally:
-        # Unregister.
-        connected.remove(websocket)
-        GPIO.cleanup()
+                await ws.send(f' recebido: {message}')
+        finally:
+            # Unregister.
+            connected.remove(ws)
+            GPIO.cleanup()
 
 
 if __name__ == "__main__":
