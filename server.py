@@ -4,7 +4,7 @@ import cv2
 import websockets
 # ! /usr/bin/python
 # -*- coding: utf-8 -*-
-import RPi.GPIO
+import RPi.GPIO as GPIO
 import time
 from flask import Flask, render_template
 from flask_sock import Sock
