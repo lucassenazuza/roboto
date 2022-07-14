@@ -43,7 +43,7 @@ def video_stream():
 def video_feed():
     return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@sock.on("/sock")
+@sock.on(namespace="/sock")
 def server(ws):
     while True:
         try:
