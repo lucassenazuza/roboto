@@ -1,14 +1,10 @@
-import asyncio
-
 import cv2
-import websockets
+from flask import Flask, Response
+from flask_socketio import SocketIO
+
+import RPi.GPIO as GPIO
 # ! /usr/bin/python
 # -*- coding: utf-8 -*-
-import RPi.GPIO as GPIO
-import time
-from flask import Flask, render_template
-from flask_sock import Sock
-from flask import Flask, render_template, Response, stream_with_context, request
 
 # 17
 # 27
@@ -19,6 +15,7 @@ RIGHT_REVERSE = 27
 LEFT_REVERSE = 22
 LEFT_STRAIGHT = 10
 
+
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(RIGHT_STRAIGHT, GPIO.OUT)
 GPIO.setup(RIGHT_REVERSE, GPIO.OUT)
@@ -27,8 +24,7 @@ GPIO.setup(LEFT_REVERSE, GPIO.OUT)
 
 connected = set()
 app = Flask('__name__')
-sock = Sock(app)
-
+sock = SocketIO(app)
 video = cv2.VideoCapture(0)
 
 
@@ -47,11 +43,12 @@ def video_stream():
 def video_feed():
     return Response(video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@sock.route("/sock")
+@sock.on("/sock")
 def server(ws):
     while True:
         try:
             message = ws.receive()
+            ws.send(f' recebido: {message}')
             if (message == "up"):
                 GPIO.output(RIGHT_STRAIGHT, GPIO.HIGH)
                 GPIO.output(LEFT_STRAIGHT, GPIO.HIGH)
@@ -84,3 +81,4 @@ def server(ws):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
+    video.release()
